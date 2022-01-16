@@ -1,0 +1,23 @@
+version: '3'
+services:
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra-server
+    ports:
+      - '9042:9042'
+    volumes:
+      - cassandra-volume:/var/lib/cassandra
+  cassandra_1:
+    image: cassandra:latest
+    container_name: cassandra-1
+    environment:
+      CASSANDRA_SEEDS: cassandra-server
+    volumes:
+      - cassandra1-volume:/var/lib/cassandra
+    depends_on:
+      - cassandra
+volumes:
+  cassandra-volume:
+    external: false
+  cassandra1-volume:
+    external: false
